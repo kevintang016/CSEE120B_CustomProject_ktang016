@@ -117,15 +117,21 @@ void Tick(){
 			break;
 		case Box_Locked2:
 			if(check2 == 1 && check1 == 1){
-				Box_State = Box_Locked3;
+				Box_State = Box_Open;
+			}
+			else if(check1 == 1 && check2 == 0){
+				Box_State = Box_Locked1;
 			}
 			else{
 				Box_State = Box_Locked2;
 			}
 			break;
 		case Box_Open:
-			if(close == 1){
+			if(close == 1 && check1 == 0 && check2 == 0){
 				Box_State = Box_Locked1;
+			}
+			else if(close == 1 && check1 == 1 && check2 == 0){
+				Box_State = Box_Locked2;
 			}
 			else if(check2 == 1 && check1 == 1){
 				Box_State = Box_Open;
@@ -146,6 +152,8 @@ void Tick(){
 			break;
 		case Box_Open:
 			close = 0;
+			get_locked1();
+			get_locked2();
 			get_open();
 			break;
 	}
